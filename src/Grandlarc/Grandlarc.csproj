@@ -30,9 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SampSharp.GameMode, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SampSharp.GameMode, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\sampsharp-rivershell\lib\SampSharp.GameMode.dll</HintPath>
+      <HintPath>..\packages\SampSharp.GameMode.0.3.0.0\lib\net45\SampSharp.GameMode.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,7 +50,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpawnPositions.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -20,10 +20,10 @@ namespace Grandlarc
 {
     public class Player : GtaPlayer
     {
-        private static readonly Random random = new Random();
+        private static readonly Random Random = new Random();
 
         public bool HasCitySelected;
-        private DateTime lastSelectionTime;
+        private DateTime _lastSelectionTime;
 
         public Player(int id) : base(id)
         {
@@ -48,7 +48,7 @@ namespace Grandlarc
 
             Interior = 0;
 
-            int randomPosition = random.Next(0, SpawnPositions.Positions[SelectedCity].Count);
+            int randomPosition = Random.Next(0, SpawnPositions.Positions[SelectedCity].Count);
 
             Position = SpawnPositions.Positions[SelectedCity][randomPosition].Position;
             Rotation = new Vector(SpawnPositions.Positions[SelectedCity][randomPosition].Rotation);
@@ -87,11 +87,12 @@ namespace Grandlarc
 
             if (!HasCitySelected)
             {
-                lastSelectionTime = DateTime.Now;
+                _lastSelectionTime = DateTime.Now;
                 ToggleSpectating(true);
 
                 GameMode.HelpSpawnTextdraw.Show(this);
                 PrepareSelectedCity();
+
                 e.Success = false;
                 return;
             }
@@ -132,12 +133,12 @@ namespace Grandlarc
 
             DateTime now = DateTime.Now;
 
-            if ((now - lastSelectionTime).Milliseconds < 150)
+            if ((now - _lastSelectionTime).Milliseconds < 150)
             {
                 return;
             }
 
-            lastSelectionTime = now;
+            _lastSelectionTime = now;
 
             if (leftright < 0)
             {

@@ -30,7 +30,7 @@ namespace Grandlarc
         public static TextDraw LasVenturasTextDraw;
         public static TextDraw HelpSpawnTextdraw;
 
-        public override bool OnGameModeInit()
+        protected override void OnInitialized(EventArgs e)
         {
             SetGameModeText("Grand Larceny");
 
@@ -116,7 +116,7 @@ namespace Grandlarc
             CreateSpawnTextdraws();
             LoadVehicles();
 
-            return base.OnGameModeInit();
+            base.OnInitialized(e);
         }
 
         private void LoadVehicles()
