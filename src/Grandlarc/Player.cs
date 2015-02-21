@@ -32,17 +32,17 @@ namespace Grandlarc
 
         public City SelectedCity { get; private set; }
 
-        public override void OnConnected(PlayerEventArgs e)
+        public override void OnConnected(EventArgs e)
         {
             base.OnConnected(e);
 
-            Console.WriteLine(e.Player.Name + " is connected.");
+            Console.WriteLine(Name + " is connected.");
 
             SendClientMessage("Welcome to {88AA88}G{FFFFFF}rand {88AA88}L{FFFFFF}arceny");
             GameText("~w~Grand Larceny", 4000, 4);
         }
 
-        public override void OnSpawned(PlayerEventArgs e)
+        public override void OnSpawned(SpawnEventArgs e)
         {
             base.OnSpawned(e);
 
@@ -69,11 +69,11 @@ namespace Grandlarc
             ToggleClock(false);
         }
 
-        public override void OnDeath(PlayerDeathEventArgs e)
+        public override void OnDeath(DeathEventArgs e)
         {
             base.OnDeath(e);
 
-            if (e.KillerId != InvalidId && Money > 0)
+            if (e.Killer != null && Money > 0)
             {
                 e.Killer.Money += Money;
             }
@@ -81,7 +81,7 @@ namespace Grandlarc
             ResetMoney();
         }
 
-        public override void OnRequestClass(PlayerRequestClassEventArgs e)
+        public override void OnRequestClass(RequestClassEventArgs e)
         {
             base.OnRequestClass(e);
 
@@ -93,15 +93,14 @@ namespace Grandlarc
                 GameMode.HelpSpawnTextdraw.Show(this);
                 PrepareSelectedCity();
 
-                e.Success = false;
+                e.PreventSpawning = true;
                 return;
             }
 
             ShowCharacterSelection();
-            e.Success = true;
         }
 
-        public override void OnUpdate(PlayerEventArgs e)
+        public override void OnUpdate(PlayerUpdateEventArgs e)
         {
             base.OnUpdate(e);
 

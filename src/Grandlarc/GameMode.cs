@@ -41,7 +41,7 @@ namespace Grandlarc
             DisableInteriorEnterExits();
             SetWeather(2);
             SetWorldTime(11);
-            UsePlayerPedAnims();
+            UsePlayerPedAnimations();
 
             AddPlayerClass(1, new Vector(1759.0189, -1898.1260, 13.5622), 266.4503f);
             AddPlayerClass(2, new Vector(1759.0189, -1898.1260, 13.5622), 266.4503f);
