@@ -1,20 +1,21 @@
-﻿// SampSharp
-// Copyright (C) 2014 Tim Potze
+﻿// Grandlarc
+// Copyright 2015 Tim Potze
 // 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-// IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-// OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-// OTHER DEALINGS IN THE SOFTWARE.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 // 
-// For more information, please refer to <http://unlicense.org>
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using SampSharp.GameMode;
-using SampSharp.GameMode.World;
 
 namespace Grandlarc
 {
@@ -108,7 +109,7 @@ namespace Grandlarc
                 new WorldPosition(new Vector3(1299.1859f, -801.4249f, 84.1406f), 269.5274f),
                 new WorldPosition(new Vector3(1240.3170f, -2036.6886f, 59.9575f), 276.4659f),
                 new WorldPosition(new Vector3(2215.5181f, -2627.8174f, 13.5469f), 273.7786f),
-                new WorldPosition(new Vector3(2509.4346f, -2637.6543f, 13.6453f), 358.3565f),
+                new WorldPosition(new Vector3(2509.4346f, -2637.6543f, 13.6453f), 358.3565f)
             };
 
             positions.Add(City.LosSantos, losSantos.AsReadOnly());
@@ -145,7 +146,7 @@ namespace Grandlarc
                 new WorldPosition(new Vector3(-1427.0858f, -288.9430f, 14.1484f), 137.0812f),
                 new WorldPosition(new Vector3(-2173.0654f, -392.7444f, 35.3359f), 237.0159f),
                 new WorldPosition(new Vector3(-2320.5286f, -180.3870f, 35.3135f), 179.6980f),
-                new WorldPosition(new Vector3(-2930.0049f, 487.2518f, 4.9141f), 3.8258f),
+                new WorldPosition(new Vector3(-2930.0049f, 487.2518f, 4.9141f), 3.8258f)
             };
 
             positions.Add(City.SanFierro, sanFierro.AsReadOnly());
