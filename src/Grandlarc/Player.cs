@@ -12,6 +12,7 @@
 // For more information, please refer to <http://unlicense.org>
 
 using System;
+using SampSharp.GameMode;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
@@ -51,7 +52,7 @@ namespace Grandlarc
             int randomPosition = Random.Next(0, SpawnPositions.Positions[SelectedCity].Count);
 
             Position = SpawnPositions.Positions[SelectedCity][randomPosition].Position;
-            Rotation = new Vector(SpawnPositions.Positions[SelectedCity][randomPosition].Rotation);
+            Rotation = new Vector3(SpawnPositions.Positions[SelectedCity][randomPosition].Rotation);
 
             SetSkillLevel(WeaponSkill.Pistol, 200);
             SetSkillLevel(WeaponSkill.PistolSilenced, 200);
@@ -157,8 +158,8 @@ namespace Grandlarc
             {
                 case City.LosSantos:
                     Interior = 0;
-                    CameraPosition = new Vector(1630.6136, -2286.0298, 110.0);
-                    SetCameraLookAt(new Vector(1887.6034, -1682.1442, 47.6167));
+                    CameraPosition = new Vector3(1630.6136f, -2286.0298f, 110.0f);
+                    SetCameraLookAt(new Vector3(1887.6034f, -1682.1442f, 47.6167f));
 
                     GameMode.LasVenturasTextDraw.Hide(this);
                     GameMode.LosSantosTextDraw.Show(this);
@@ -166,8 +167,8 @@ namespace Grandlarc
                     break;
                 case City.SanFierro:
                     Interior = 0;
-                    CameraPosition = new Vector(-1300.8754, 68.0546, 129.4823);
-                    SetCameraLookAt(new Vector(-1817.9412, 769.3878, 132.6589));
+                    CameraPosition = new Vector3(-1300.8754f, 68.0546f, 129.4823f);
+                    SetCameraLookAt(new Vector3(-1817.9412f, 769.3878f, 132.6589f));
 
                     GameMode.LasVenturasTextDraw.Hide(this);
                     GameMode.LosSantosTextDraw.Hide(this);
@@ -175,8 +176,8 @@ namespace Grandlarc
                     break;
                 case City.LasVenturas:
                     Interior = 0;
-                    CameraPosition = new Vector(1310.6155, 1675.9182, 110.7390);
-                    SetCameraLookAt(new Vector(2285.2944, 1919.3756, 68.2275));
+                    CameraPosition = new Vector3(1310.6155f, 1675.9182f, 110.7390f);
+                    SetCameraLookAt(new Vector3(2285.2944f, 1919.3756f, 68.2275f));
 
                     GameMode.LasVenturasTextDraw.Show(this);
                     GameMode.LosSantosTextDraw.Hide(this);
@@ -191,26 +192,26 @@ namespace Grandlarc
             {
                 case City.LosSantos:
                     Interior = 11;
-                    Position = new Vector(508.7362, -87.4335, 998.9609);
+                    Position = new Vector3(508.7362f, -87.4335f, 998.9609f);
                     Angle = 0.0f;
-                    CameraPosition = new Vector(508.7362, -83.4335, 998.9609);
-                    SetCameraLookAt(new Vector(508.7362f, -87.4335f, 998.9609f));
+                    CameraPosition = new Vector3(508.7362f, -83.4335f, 998.9609f);
+                    SetCameraLookAt(new Vector3(508.7362f, -87.4335f, 998.9609f));
                     break;
 
                 case City.SanFierro:
                     Interior = 3;
-                    Position = new Vector(-2673.8381, 1399.7424, 918.3516);
+                    Position = new Vector3(-2673.8381f, 1399.7424f, 918.3516f);
                     Angle = 181.0f;
-                    CameraPosition = new Vector(-2673.2776, 1394.3859, 918.3516);
-                    SetCameraLookAt(new Vector(-2673.8381, 1399.7424, 918.3516));
+                    CameraPosition = new Vector3(-2673.2776f, 1394.3859f, 918.3516f);
+                    SetCameraLookAt(new Vector3(-2673.8381f, 1399.7424f, 918.3516f));
                     break;
 
                 case City.LasVenturas:
                     Interior = 3;
-                    Position = new Vector(349.0453, 193.2271, 1014.1797);
+                    Position = new Vector3(349.0453f, 193.2271f, 1014.1797f);
                     Angle = 286.25f;
-                    CameraPosition = new Vector(352.9164, 194.5702, 1014.1875);
-                    SetCameraLookAt(new Vector(349.0453, 193.2271, 1014.1797));
+                    CameraPosition = new Vector3(352.9164f, 194.5702f, 1014.1875f);
+                    SetCameraLookAt(new Vector3(349.0453f, 193.2271f, 1014.1797f));
                     break;
             }
         }
