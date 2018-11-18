@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 using System;
 using System.IO;
 using Grandlarc.Controllers;
@@ -20,6 +21,7 @@ using SampSharp.GameMode;
 using SampSharp.GameMode.Controllers;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Display;
+using SampSharp.GameMode.SAMP;
 using SampSharp.GameMode.SAMP.Commands;
 using SampSharp.GameMode.World;
 
@@ -41,8 +43,8 @@ namespace Grandlarc
             SetNameTagDrawDistance(40.0f);
             EnableStuntBonusForAll(false);
             DisableInteriorEnterExits();
-            SetWeather(2);
-            SetWorldTime(11);
+            Server.SetWeather(2);
+            Server.SetWorldTime(11);
             UsePlayerPedAnimations();
 
             AddPlayerClass(1, new Vector3(1759.0189f, -1898.1260f, 13.5622f), 266.4503f);
@@ -118,6 +120,7 @@ namespace Grandlarc
             CreateSpawnTextdraws();
             LoadVehicles();
 
+
             base.OnInitialized(e);
         }
 
@@ -130,30 +133,28 @@ namespace Grandlarc
                 return;
             }
 
-            string[] files = Directory.GetFiles("scriptfiles/vehicles/");
-            int totalVehicles = 0;
+            var files = Directory.GetFiles("scriptfiles/vehicles/");
+            var totalVehicles = 0;
 
-            foreach (string file in files)
+            foreach (var file in files)
+            foreach (var line in File.ReadLines(file))
             {
-                foreach (string line in File.ReadLines(file))
-                {
-                    string[] tokens = line.Split(',');
+                var tokens = line.Split(',');
 
-                    // the sa-mp team thinks that was funny to put a ; at the end of the line *-*
-                    int endOfLineDelimiter = tokens[6].IndexOf(';');
+                // the sa-mp team thinks that was funny to put a ; at the end of the line *-*
+                var endOfLineDelimiter = tokens[6].IndexOf(';');
 
-                    GtaVehicle.CreateStatic(
-                        int.Parse(tokens[0]),
-                        new Vector3(float.Parse(tokens[1]), float.Parse(tokens[2]), float.Parse(tokens[3])),
-                        float.Parse(tokens[4]),
-                        int.Parse(tokens[5]),
-                        int.Parse(tokens[6].Substring(0,
-                            endOfLineDelimiter != -1 ? endOfLineDelimiter - 1 : tokens[6].Length)
-                            )
-                        );
+                BaseVehicle.CreateStatic(
+                    (VehicleModelType) int.Parse(tokens[0]),
+                    new Vector3(float.Parse(tokens[1]), float.Parse(tokens[2]), float.Parse(tokens[3])),
+                    float.Parse(tokens[4]),
+                    int.Parse(tokens[5]),
+                    int.Parse(tokens[6].Substring(0,
+                        endOfLineDelimiter != -1 ? endOfLineDelimiter - 1 : tokens[6].Length)
+                    )
+                );
 
-                    ++totalVehicles;
-                }
+                ++totalVehicles;
             }
 
             Console.WriteLine("Total vehicles from files: " + totalVehicles);
@@ -175,8 +176,7 @@ namespace Grandlarc
             {
                 UseBox = true,
                 BoxColor = 0x222222BB,
-                LetterHeight = 1.0f,
-                LetterWidth = 0.3f,
+                LetterSize = new Vector2(0.3f, 1.0f),
                 Font = TextDrawFont.Normal,
                 Shadow = 0,
                 Outline = 1,
@@ -188,8 +188,7 @@ namespace Grandlarc
         private void InitCitySelectTextDraw(TextDraw textDraw)
         {
             textDraw.UseBox = true;
-            textDraw.LetterHeight = 3.0f;
-            textDraw.LetterWidth = 1.25f;
+            textDraw.LetterSize = new Vector2(1.25f, 3.0f);
             textDraw.Font = TextDrawFont.Diploma;
             textDraw.Shadow = 0;
             textDraw.Outline = 1;
@@ -201,18 +200,18 @@ namespace Grandlarc
         {
             base.LoadControllers(controllers);
 
-            controllers.Remove<GtaPlayerController>();
+            controllers.Remove<BasePlayerController>();
             controllers.Add(new PlayerController());
         }
 
         [Command("kill")]
-        public static void KillMe(GtaPlayer player)
+        public static void KillMe(BasePlayer player)
         {
             player.Health = 0.0f;
         }
 
         [Command("changecity")]
-        public static void ChangeCity(GtaPlayer player)
+        public static void ChangeCity(BasePlayer player)
         {
             player.ForceClassSelection();
             (player as Player).HasCitySelected = false;

@@ -17,17 +17,19 @@ using System;
 using SampSharp.GameMode;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Events;
+using SampSharp.GameMode.Pools;
 using SampSharp.GameMode.World;
 
 namespace Grandlarc
 {
-    public class Player : GtaPlayer
+    [PooledType]
+    public class Player : BasePlayer
     {
         private static readonly Random Random = new Random();
         private DateTime _lastSelectionTime;
         public bool HasCitySelected;
 
-        public Player(int id) : base(id)
+        public Player()
         {
             SelectedCity = City.LosSantos;
         }
@@ -50,7 +52,7 @@ namespace Grandlarc
 
             Interior = 0;
 
-            int randomPosition = Random.Next(0, SpawnPositions.Positions[SelectedCity].Count);
+            var randomPosition = Random.Next(0, SpawnPositions.Positions[SelectedCity].Count);
 
             Position = SpawnPositions.Positions[SelectedCity][randomPosition].Position;
             Rotation = new Vector3(SpawnPositions.Positions[SelectedCity][randomPosition].Rotation);
@@ -75,10 +77,7 @@ namespace Grandlarc
         {
             base.OnDeath(e);
 
-            if (e.Killer != null && Money > 0)
-            {
-                e.Killer.Money += Money;
-            }
+            if (e.Killer != null && Money > 0) e.Killer.Money += Money;
 
             ResetMoney();
         }
@@ -106,10 +105,7 @@ namespace Grandlarc
         {
             base.OnUpdate(e);
 
-            if (State == PlayerState.Spectating && !HasCitySelected)
-            {
-                HandleCitySelection();
-            }
+            if (State == PlayerState.Spectating && !HasCitySelected) HandleCitySelection();
         }
 
         private void HandleCitySelection()
@@ -132,23 +128,15 @@ namespace Grandlarc
                 return;
             }
 
-            DateTime now = DateTime.Now;
+            var now = DateTime.Now;
 
-            if ((now - _lastSelectionTime).Milliseconds < 150)
-            {
-                return;
-            }
+            if ((now - _lastSelectionTime).Milliseconds < 150) return;
 
             _lastSelectionTime = now;
 
             if (leftright < 0)
-            {
                 SelectedCity = SelectedCity.Next();
-            }
-            else if (leftright > 0)
-            {
-                SelectedCity = SelectedCity.Prev();
-            }
+            else if (leftright > 0) SelectedCity = SelectedCity.Prev();
 
             PrepareSelectedCity();
         }

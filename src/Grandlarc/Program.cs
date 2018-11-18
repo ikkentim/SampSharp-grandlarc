@@ -13,15 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using SampSharp.GameMode.Controllers;
 
-namespace Grandlarc.Controllers
+using SampSharp.Core;
+
+namespace Grandlarc
 {
-    public class PlayerController : BasePlayerController
+    class Program
     {
-        public override void RegisterTypes()
+        static void Main()
         {
-            Player.Register<Player>();
+            new GameModeBuilder()
+                .Use<GameMode>()
+                .Run();
         }
     }
 }
