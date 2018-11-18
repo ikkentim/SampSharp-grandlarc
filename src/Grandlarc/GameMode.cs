@@ -15,6 +15,7 @@
 
 
 using System;
+using System.Globalization;
 using System.IO;
 using Grandlarc.Controllers;
 using SampSharp.GameMode;
@@ -146,13 +147,16 @@ namespace Grandlarc
 
                 BaseVehicle.CreateStatic(
                     (VehicleModelType) int.Parse(tokens[0]),
-                    new Vector3(float.Parse(tokens[1]), float.Parse(tokens[2]), float.Parse(tokens[3])),
-                    float.Parse(tokens[4]),
+                    new Vector3(float.Parse(tokens[1], CultureInfo.InvariantCulture), float.Parse(tokens[2], CultureInfo.InvariantCulture), float.Parse(tokens[3], CultureInfo.InvariantCulture)),
+                    float.Parse(tokens[4], CultureInfo.InvariantCulture),
                     int.Parse(tokens[5]),
                     int.Parse(tokens[6].Substring(0,
                         endOfLineDelimiter != -1 ? endOfLineDelimiter - 1 : tokens[6].Length)
                     )
                 );
+                
+                
+                Console.WriteLine($"Vehicle: {totalVehicles}, Vector3: {new Vector3(float.Parse(tokens[1], CultureInfo.InvariantCulture), float.Parse(tokens[2], CultureInfo.InvariantCulture), float.Parse(tokens[1], CultureInfo.InvariantCulture))}");
 
                 ++totalVehicles;
             }
@@ -203,6 +207,7 @@ namespace Grandlarc
             controllers.Remove<BasePlayerController>();
             controllers.Add(new PlayerController());
         }
+
 
         [Command("kill")]
         public static void KillMe(BasePlayer player)
