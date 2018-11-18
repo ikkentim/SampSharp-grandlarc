@@ -154,9 +154,6 @@ namespace Grandlarc
                         endOfLineDelimiter != -1 ? endOfLineDelimiter - 1 : tokens[6].Length)
                     )
                 );
-                
-                
-                Console.WriteLine($"Vehicle: {totalVehicles}, Vector3: {new Vector3(float.Parse(tokens[1], CultureInfo.InvariantCulture), float.Parse(tokens[2], CultureInfo.InvariantCulture), float.Parse(tokens[1], CultureInfo.InvariantCulture))}");
 
                 ++totalVehicles;
             }
