@@ -2,21 +2,20 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>D:\C#_Projects\SampSharp-grandlarc\env\gamemode\</OutputPath>
+    <OutputPath>..\..\env\gamemode\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>D:\C#_Projects\SampSharp-grandlarc\env\gamemode\</OutputPath>
+    <OutputPath>..\..\env\gamemode\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SampSharp.Core" Version="0.8.0-alpha8" />
-    <PackageReference Include="SampSharp.GameMode" Version="0.8.0-alpha8" />
+    <PackageReference Include="SampSharp.GameMode" Version="0.8.0" />
   </ItemGroup>
 
   <ItemGroup>
