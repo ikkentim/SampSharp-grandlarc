@@ -1,11 +1,5 @@
 SampSharp Grandlarc
-====================
+===================
+This repository contains the Grand Larcency 1.0 gamemode which has been converted to SampSharp.
+The Grand Larcency gamemode is a freeroam gamemode for SA-MP 0.3 which is shipped with every copy of the SA-MP server.
 
-The _Grandlarc_ gamemode in this repository is the same as the version shipped with every copy of the [SA-MP server] package, but has been converted to C#/[SampSharp].
-
-If you find any problems or have questions, submit an issue.
-
-[sa-mp server]: http://sa-mp.com/download.php
-[SampSharp]: https://github.com/ikkentim/SampSharp
-
-[![Analytics](https://ga-beacon.appspot.com/UA-58691640-2/SampSharp-grandlarc/readme?pixel)](https://github.com/igrigorik/ga-beacon)
