@@ -3,6 +3,7 @@ using SampSharp.Core;
 
 namespace GrandLarcency
 {
+    /// <inheritdoc />
     public class ScriptFilesService : IScriptFilesService
     {
         private readonly IGameModeClient _gameModeClient;
@@ -11,7 +12,8 @@ namespace GrandLarcency
         {
             _gameModeClient = gameModeClient;
         }
-
+        
+        /// <inheritdoc />
         public Stream OpenFile(string fileName)
         {
             var path = Path.Combine(_gameModeClient.ServerPath, "scriptfiles", fileName);

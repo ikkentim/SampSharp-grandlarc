@@ -6,14 +6,18 @@ using SampSharp.Entities.SAMP;
 
 namespace GrandLarcency
 {
+    /// <inheritdoc />
     public class VehicleSpawnParserService : IVehicleSpawnParserService
     {
+        /// <inheritdoc />
         public IEnumerable<VehicleSpawn> Parse(Stream stream)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
+            // Use a stream reader to read text from the stream.
             using var reader = new StreamReader(stream);
 
+            // Read lines until the end of the stream.
             while (!reader.EndOfStream)
             {
                 var line = reader.ReadLine();
@@ -23,18 +27,18 @@ namespace GrandLarcency
 
                 var endOfLine = line.IndexOf(';');
 
-                // The line should contain and end of line marker ';'
+                // The line should contain and end of line marker ';'.
                 if (endOfLine <= 0)
                     continue;
 
-                // Split segments of the line delimited by a ','
+                // Split segments of the line delimited by a ','.
                 var segments = line.Substring(0, endOfLine).Split(',');
 
-                // The segments should contain all model, x, y, z, angle, color1 and color2
+                // The segments should contain all model, x, y, z, angle, color1 and color2.
                 if (segments.Length != 7)
                     continue;
 
-                // Parse all segments into their respective value type
+                // Parse all segments into their respective value type.
                 if (
                     !int.TryParse(segments[0].Trim(), out var modelId) ||
                     !Enum.IsDefined(typeof(VehicleModelType), modelId) ||
@@ -50,7 +54,7 @@ namespace GrandLarcency
                 yield return new VehicleSpawn
                 {
                     Model = (VehicleModelType)modelId,
-                    Postion = new Vector3(x, y, z),
+                    Position = new Vector3(x, y, z),
                     Angle = angle,
                     Color1 = color1,
                     Color2 = color2

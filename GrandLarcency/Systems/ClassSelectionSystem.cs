@@ -4,16 +4,20 @@ using SampSharp.Entities.SAMP;
 
 namespace GrandLarcency
 {
+    /// <summary>
+    /// Represents a system which provides the class and city selection functionality for players.
+    /// </summary>
     public class ClassSelectionSystem : ISystem
     {
+        private TextDraw _txtClassSelHelper;
+        private TextDraw _txtLasVenturas;
         private TextDraw _txtLosSantos;
         private TextDraw _txtSanFierro;
-        private TextDraw _txtLasVenturas;
-        private TextDraw _txtClassSelHelper;
 
         [Event]
         public void OnGameModeInit(IServerService serverService, IWorldService worldService)
         {
+            // Add all classes available in this game mode.
             serverService.AddPlayerClass(298, new Vector3(1759.0189f, -1898.1260f, 13.5622f), 266.4503f);
             serverService.AddPlayerClass(299, new Vector3(1759.0189f, -1898.1260f, 13.5622f), 266.4503f);
             serverService.AddPlayerClass(300, new Vector3(1759.0189f, -1898.1260f, 13.5622f), 266.4503f);
@@ -96,6 +100,85 @@ namespace GrandLarcency
             InitTextDraws(worldService);
         }
 
+        [Event]
+        public void OnPlayerConnect(Player player)
+        {
+            player.AddComponent<CitySelectionComponent>();
+        }
+
+        [Event]
+        public bool OnPlayerRequestClass(CitySelectionComponent citySelection, int classId)
+        {
+            var player = citySelection.GetComponent<Player>();
+
+            if (player.State == PlayerState.Spectating)
+                return false;
+
+            player.ToggleSpectating(true);
+            _txtClassSelHelper.Show(player);
+
+            return false;
+        }
+
+        [Event]
+        public void OnPlayerRequestClass(ClassSelectionComponent classSelection, int classId)
+        {
+            var player = classSelection.GetComponent<Player>();
+            var citizen = classSelection.GetComponent<CitizenComponent>();
+
+            SetClassSelectionPositionForCity(player, citizen.City);
+        }
+
+        [Event]
+        public void OnPlayerUpdate(CitySelectionComponent citySelection)
+        {
+            var player = citySelection.GetComponent<Player>();
+
+            // If the player has not yet selected a city, move to the first city.
+            if (citySelection.SelectedCity == City.None)
+            {
+                SwitchToNextCity(citySelection, player);
+                return;
+            }
+
+            // Only allow new selection every ~500 ms.
+            if (DateTime.UtcNow - citySelection.LastSelection < TimeSpan.FromMilliseconds(500))
+                return;
+
+            player.GetKeys(out var keys, out _, out var leftRight);
+
+            if (keys.HasFlag(Keys.Fire))
+            {
+                // Add a citizen component to define the spawn location of the player. 
+                player.AddComponent<CitizenComponent>(citySelection.SelectedCity);
+
+                // Add a class selection component to move the player to
+                player.AddComponent<ClassSelectionComponent>();
+
+                // End city selection for the player by removing the city selection component.
+                citySelection.Destroy();
+
+                // Hide textdraws used by the city selection.
+                _txtClassSelHelper.Hide(player);
+                _txtLosSantos.Hide(player);
+                _txtSanFierro.Hide(player);
+                _txtLasVenturas.Hide(player);
+
+                // Disable spectating to allow the player to spawn in the world.
+                player.ToggleSpectating(false);
+
+                return;
+            }
+
+            // Use left and right arrow keys to switch between cities.
+            if (leftRight > 0)
+                SwitchToNextCity(citySelection, player);
+            else if (leftRight < 0) SwitchToPreviousCity(citySelection, player);
+        }
+
+        /// <summary>
+        /// Initializes the text draws used by this class selection system.
+        /// </summary>
         private void InitTextDraws(IWorldService worldService)
         {
             void InitCityNameText(TextDraw txtInit)
@@ -123,7 +206,7 @@ namespace GrandLarcency
             _txtClassSelHelper.UseBox = true;
             _txtClassSelHelper.BoxColor = Color.FromInteger(0x222222BB, ColorFormat.RGBA);
             _txtClassSelHelper.LetterSize = new Vector2(0.3, 1.0);
-            _txtClassSelHelper.TextSize= new Vector2(400.0f, 40.0f);
+            _txtClassSelHelper.TextSize = new Vector2(400.0f, 40.0f);
             _txtClassSelHelper.Font = TextDrawFont.Slim;
             _txtClassSelHelper.Shadow = 0;
             _txtClassSelHelper.Outline = 1;
@@ -131,74 +214,9 @@ namespace GrandLarcency
             _txtClassSelHelper.BackColor = Color.Black;
         }
 
-        [Event]
-        public void OnPlayerConnect(Player player)
-        {
-            player.GameText("~w~Grand Larceny",3000, 4);
-            player.SendClientMessage("Welcome to {88AA88}G{FFFFFF}rand {88AA88}L{FFFFFF}arceny");
-
-            player.AddComponent<CitySelectionComponent>();
-        }
-
-        [Event]
-        public void OnPlayerSpawn(CitizenComponent citizen, ISpawnLocationRepository spawnLocationRepository)
-        {
-            var player = citizen.GetComponent<Player>();
-
-            if (player.IsNpc) return;
-
-            player.Interior = 0;
-            player.ToggleClock(false);
-            player.Money = 30000;
-            player.GiveWeapon(Weapon.Colt45, 100);
-
-            var location = spawnLocationRepository.GetRandomSpawnLocation(citizen.City);
-
-            player.Position = location.Position;
-            player.Angle = location.Angle;
-        }
-
-        [Event]
-        public void OnPlayerDeath(Player player, Player killer, Weapon reason)
-        {
-            if (killer == null)
-            {
-                player.ResetMoney();
-            }
-            else
-            {
-                var money = player.Money;
-                if (money > 0)
-                {
-                    killer.GiveMoney(money);
-                    player.ResetMoney();
-                }
-            }
-        }
-
-        [Event]
-        public bool OnPlayerRequestClass(CitySelectionComponent citySelection, int classId)
-        {
-            var player = citySelection.GetComponent<Player>();
-
-            if (player.State == PlayerState.Spectating)
-                return false;
-
-            player.ToggleSpectating(true);
-            _txtClassSelHelper.Show(player);
-
-            return false;
-        }
-
-        [Event]
-        public void OnPlayerRequestClass(ClassSelectionComponent classSelection, int classId)
-        {
-            var player = classSelection.GetComponent<Player>();
-            var citizen = classSelection.GetComponent<CitizenComponent>();
-
-            SetClassSelectionPositionForCity(player, citizen.City);
-        }
-        
+        /// <summary>
+        /// Switches the <paramref name="player" /> to the next city.
+        /// </summary>
         private void SwitchToNextCity(CitySelectionComponent citySelection, Player player)
         {
             citySelection.SelectedCity = citySelection.SelectedCity == City.LasVenturas
@@ -210,6 +228,9 @@ namespace GrandLarcency
             SetupSelectedCity(player, citySelection.SelectedCity);
         }
 
+        /// <summary>
+        /// Switches the <paramref name="player" /> to the previous city.
+        /// </summary>
         private void SwitchToPreviousCity(CitySelectionComponent citySelection, Player player)
         {
             citySelection.SelectedCity = citySelection.SelectedCity == City.LosSantos
@@ -221,6 +242,11 @@ namespace GrandLarcency
             SetupSelectedCity(player, citySelection.SelectedCity);
         }
 
+        /// <summary>
+        /// Setup the city selection screen for the specified <paramref name="player" /> and <paramref name="city" />.
+        /// </summary>
+        /// <param name="player">The player for whom to setup the city selection screen.</param>
+        /// <param name="city">The city for which to setup the selection screen.</param>
         private void SetupSelectedCity(Player player, City city)
         {
             switch (city)
@@ -252,45 +278,12 @@ namespace GrandLarcency
             }
         }
 
-        [Event]
-        public void OnPlayerUpdate(CitySelectionComponent citySelection)
-        {
-            var player = citySelection.GetComponent<Player>();
-
-            player.GetKeys(out var keys, out _, out var leftRight);
-
-            if (citySelection.SelectedCity == City.None)
-            {
-                SwitchToNextCity(citySelection, player);
-                return;
-            }
-            
-            // only allow new selection every ~500 ms
-            if ((DateTime.UtcNow - citySelection.LastSelection) < TimeSpan.FromMilliseconds(500))
-                return;
-
-            if (keys.HasFlag(Keys.Fire))
-            {
-                player.AddComponent<CitizenComponent>(citySelection.SelectedCity);
-                player.AddComponent<ClassSelectionComponent>();
-                citySelection.Destroy();
-
-                _txtClassSelHelper.Hide(player);
-                _txtLosSantos.Hide(player);
-                _txtSanFierro.Hide(player);
-                _txtLasVenturas.Hide(player);
-                player.ToggleSpectating(false);
-                return;
-            }
-
-            if(leftRight > 0) {
-                SwitchToNextCity(citySelection, player);
-            }
-            else if(leftRight < 0) {
-                SwitchToPreviousCity(citySelection, player);
-            }
-        }
-
+        /// <summary>
+        /// Moves the specified <paramref name="player" /> to the class selection location for the specified
+        /// <paramref name="city" />.
+        /// </summary>
+        /// <param name="player">The player to move to the class selection position.</param>
+        /// <param name="city">The city in which the class selection occurs.</param>
         private void SetClassSelectionPositionForCity(Player player, City city)
         {
             switch (city)

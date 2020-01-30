@@ -1,22 +1,24 @@
 ﻿using System;
-using System.Diagnostics;
 using SampSharp.Entities;
 using SampSharp.Entities.SAMP;
-using SampSharp.Entities.SAMP.Commands;
 
 namespace GrandLarcency
 {
-	public class ServerControlSystem : ISystem
-	{
-		[Event]
-		public void OnGameModeInit(IServerService serverService, IWorldService worldService)
-		{
-			Console.WriteLine("---------------------------------------");
+    /// <summary>
+    /// Represents a system which provides some basic server configuration.
+    /// </summary>
+    public class ServerControlSystem : ISystem
+    {
+        [Event]
+        public void OnGameModeInit(IServerService serverService, IWorldService worldService)
+        {
+            Console.WriteLine("---------------------------------------");
             Console.WriteLine("Running Grand Larceny - by the SA-MP team");
             Console.WriteLine("Converted to SampSharp");
             Console.WriteLine("---------------------------------------");
 
-			serverService.SetGameModeText("Grand Larcency");
+            // Configure global server settings
+            serverService.SetGameModeText("Grand Larcency");
             serverService.ShowPlayerMarkers(PlayerMarkersMode.Global);
             serverService.ShowNameTags(true);
             serverService.SetNameTagDrawDistance(40.0f);
@@ -26,18 +28,5 @@ namespace GrandLarcency
 
             worldService.SetWeather(2);
         }
-
-        [Event]
-        public bool OnPlayerUpdate(Player player)
-        {
-            // Don't allow minigun
-            if (player.Weapon == Weapon.Minigun)
-            {
-                player.Kick();
-                return false;
-            }
-
-            return true;
-        }
-	}
+    }
 }

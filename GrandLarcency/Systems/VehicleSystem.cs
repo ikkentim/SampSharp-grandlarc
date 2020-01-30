@@ -4,6 +4,9 @@ using SampSharp.Entities.SAMP;
 
 namespace GrandLarcency
 {
+    /// <summary>
+    /// Represents a system which spawns the vehicles in the world.
+    /// </summary>
     public class VehicleSystem : ISystem
     {
         [Event]
@@ -11,13 +14,16 @@ namespace GrandLarcency
         {
             var totalVehiclesFromFiles = 0;
 
+            // Loads the vehicles defined in a file in the scriptfiles of the SA-MP server directory.
             void LoadVehicles(string fileName)
             {
+                // Open a file stream from the scriptfiles folder.
                 using var stream = scriptFilesService.OpenFile(fileName);
 
+                // Parse each line in the file and create a vehicle for it.
                 foreach (var spawnPosition in vehicleSpawnParser.Parse(stream))
                 {
-                    worldService.CreateStaticVehicle(spawnPosition.Model, spawnPosition.Postion, spawnPosition.Angle,
+                    worldService.CreateStaticVehicle(spawnPosition.Model, spawnPosition.Position, spawnPosition.Angle,
                         spawnPosition.Color1, spawnPosition.Color2);
                     totalVehiclesFromFiles++;
                 }
@@ -51,7 +57,6 @@ namespace GrandLarcency
             LoadVehicles("vehicles/red_county.txt");
 
             Console.WriteLine($"Total vehicles from files: {totalVehiclesFromFiles}");
-
         }
     }
 }
