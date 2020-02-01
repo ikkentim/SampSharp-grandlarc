@@ -103,7 +103,8 @@ namespace GrandLarcency
         [Event]
         public void OnPlayerConnect(Player player)
         {
-            player.AddComponent<CitySelectionComponent>();
+            if (!player.IsNpc)
+                player.AddComponent<CitySelectionComponent>();
         }
 
         [Event]
