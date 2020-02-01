@@ -1,8 +1,10 @@
 ﻿using System;
+using GrandLarcency.Components;
+using GrandLarcency.Data;
 using SampSharp.Entities;
 using SampSharp.Entities.SAMP;
 
-namespace GrandLarcency
+namespace GrandLarcency.Systems
 {
     /// <summary>
     /// Represents a system which provides the class and city selection functionality for players.
@@ -285,7 +287,7 @@ namespace GrandLarcency
         /// </summary>
         /// <param name="player">The player to move to the class selection position.</param>
         /// <param name="city">The city in which the class selection occurs.</param>
-        private void SetClassSelectionPositionForCity(Player player, City city)
+        private static void SetClassSelectionPositionForCity(Player player, City city)
         {
             switch (city)
             {

@@ -1,29 +1,13 @@
-﻿// GrandLarcency
-// Copyright 2020 Tim Potze
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-using System;
+﻿using System;
+using GrandLarcency.Data;
 using SampSharp.Entities.SAMP;
 
-namespace GrandLarcency
+namespace GrandLarcency.Repositories
 {
     /// <inheritdoc />
     public class SpawnLocationRepository : ISpawnLocationRepository
     {
-        private readonly Random _random = new Random();
-
-        private static readonly PlayerSpawn[] LosSantos = new[]
+        private static readonly PlayerSpawn[] LosSantos =
         {
             new PlayerSpawn(new Vector3(1751.1097f, -2106.4529f, 13.5469f), 183.1979f), // El-Corona - Outside random house
             new PlayerSpawn(new Vector3(2652.6418f, -1989.9175f, 13.9988f), 182.7107f), // Random house in willowfield - near playa de seville and stadium
@@ -59,7 +43,7 @@ namespace GrandLarcency
             new PlayerSpawn(new Vector3(2509.4346f, -2637.6543f, 13.6453f), 358.3565f) // Ocean Docks spawn 2
         };
 
-        private static readonly PlayerSpawn[] LasVenturas = new[]
+        private static readonly PlayerSpawn[] LasVenturas =
         {
             new PlayerSpawn(new Vector3(1435.8024f, 2662.3647f, 11.3926f), 1.1650f), //  Northern train station
             new PlayerSpawn(new Vector3(1457.4762f, 2773.4868f, 10.8203f), 272.2754f), //  Northern golf club
@@ -106,7 +90,7 @@ namespace GrandLarcency
             new PlayerSpawn(new Vector3(1412.6187f, 2000.0596f, 14.7396f), 271.3568f) //  South baseball stadium houses
         };
 
-        private static readonly PlayerSpawn[] SanFierro = new[]
+        private static readonly PlayerSpawn[] SanFierro =
         {
             new PlayerSpawn(new Vector3(-2723.4639f, -314.8138f, 7.1839f), 43.5562f), // golf course spawn
             new PlayerSpawn(new Vector3(-2694.5344f, 64.5550f, 4.3359f), 95.0190f), // in front of a house
@@ -140,21 +124,19 @@ namespace GrandLarcency
             new PlayerSpawn(new Vector3(-2320.5286f, -180.3870f, 35.3135f), 179.6980f), // burger shot
             new PlayerSpawn(new Vector3(-2930.0049f, 487.2518f, 4.9141f), 3.8258f) // harbor
         };
-        
+
+        private readonly Random _random = new Random();
+
         /// <inheritdoc />
         public PlayerSpawn GetRandomSpawnLocation(City city)
         {
-            switch (city)
+            return city switch
             {
-                case City.LosSantos:
-                    return LosSantos[_random.Next(LosSantos.Length)];
-                case City.LasVenturas:
-                    return LasVenturas[_random.Next(LasVenturas.Length)];
-                case City.SanFierro:
-                    return SanFierro[_random.Next(SanFierro.Length)];
-                default:
-                    return default;
-            }
+                City.LosSantos => LosSantos[_random.Next(LosSantos.Length)],
+                City.LasVenturas => LasVenturas[_random.Next(LasVenturas.Length)],
+                City.SanFierro => SanFierro[_random.Next(SanFierro.Length)],
+                _ => default
+            };
         }
     }
 }

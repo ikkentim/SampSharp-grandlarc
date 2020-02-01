@@ -1,4 +1,6 @@
-﻿namespace GrandLarcency
+﻿using GrandLarcency.Data;
+
+namespace GrandLarcency.Repositories
 {
     /// <summary>
     /// Provides functionality for getting a random spawn location for a player.
@@ -6,7 +8,7 @@
     public interface ISpawnLocationRepository
     {
         /// <summary>
-        /// Returns a random spawn location for a player in the specified <paramref name="city"/>
+        /// Returns a random spawn location for a player in the specified <paramref name="city" />
         /// </summary>
         /// <param name="city">The city in which to get a spawn location.</param>
         /// <returns>The randomly chosen spawn location.</returns>

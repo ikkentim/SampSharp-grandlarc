@@ -1,7 +1,7 @@
 ﻿using SampSharp.Entities;
 using SampSharp.Entities.SAMP;
 
-namespace GrandLarcency
+namespace GrandLarcency.Systems
 {
     /// <summary>
     /// Represents a system which provides the map icons for players.

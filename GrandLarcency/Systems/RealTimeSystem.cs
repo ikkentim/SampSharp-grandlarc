@@ -3,15 +3,15 @@ using System.Threading.Tasks;
 using SampSharp.Entities;
 using SampSharp.Entities.SAMP;
 
-namespace GrandLarcency
+namespace GrandLarcency.Systems
 {
     /// <summary>
     /// Represents a system which provides real time to the player's game time.
     /// </summary>
     public class RealTimeSystem : ISystem
     {
-        private readonly IServerService _serverService;
         private readonly IEntityManager _entityManager;
+        private readonly IServerService _serverService;
 
         private TextDraw _textDraw;
 
@@ -57,7 +57,6 @@ namespace GrandLarcency
 
                     foreach (var player in players)
                         player.SetTime(now.Hour, now.Minute);
-
                 }
                 catch (Exception e)
                 {
@@ -69,7 +68,7 @@ namespace GrandLarcency
                 await Task.Delay(TimeSpan.FromMinutes(1));
             }
         }
-        
+
         [Event]
         public void OnPlayerSpawn(Player player)
         {

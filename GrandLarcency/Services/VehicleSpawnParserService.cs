@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using GrandLarcency.Data;
 using SampSharp.Entities.SAMP;
 
-namespace GrandLarcency
+namespace GrandLarcency.Services
 {
     /// <inheritdoc />
     public class VehicleSpawnParserService : IVehicleSpawnParserService
@@ -53,7 +54,7 @@ namespace GrandLarcency
 
                 yield return new VehicleSpawn
                 {
-                    Model = (VehicleModelType)modelId,
+                    Model = (VehicleModelType) modelId,
                     Position = new Vector3(x, y, z),
                     Angle = angle,
                     Color1 = color1,

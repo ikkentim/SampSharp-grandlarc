@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using SampSharp.Core;
 
-namespace GrandLarcency
+namespace GrandLarcency.Services
 {
     /// <inheritdoc />
     public class ScriptFilesService : IScriptFilesService
@@ -12,7 +12,7 @@ namespace GrandLarcency
         {
             _gameModeClient = gameModeClient;
         }
-        
+
         /// <inheritdoc />
         public Stream OpenFile(string fileName)
         {

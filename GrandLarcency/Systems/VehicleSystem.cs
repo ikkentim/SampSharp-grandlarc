@@ -1,8 +1,9 @@
 ﻿using System;
+using GrandLarcency.Services;
 using SampSharp.Entities;
 using SampSharp.Entities.SAMP;
 
-namespace GrandLarcency
+namespace GrandLarcency.Systems
 {
     /// <summary>
     /// Represents a system which spawns the vehicles in the world.
@@ -37,18 +38,18 @@ namespace GrandLarcency
             LoadVehicles("vehicles/lv_law.txt");
             LoadVehicles("vehicles/lv_airport.txt");
             LoadVehicles("vehicles/lv_gen.txt");
-    
+
             // SAN FIERRO
             LoadVehicles("vehicles/sf_law.txt");
             LoadVehicles("vehicles/sf_airport.txt");
             LoadVehicles("vehicles/sf_gen.txt");
-    
+
             // LOS SANTOS
             LoadVehicles("vehicles/ls_law.txt");
             LoadVehicles("vehicles/ls_airport.txt");
             LoadVehicles("vehicles/ls_gen_inner.txt");
             LoadVehicles("vehicles/ls_gen_outer.txt");
-    
+
             // OTHER AREAS
             LoadVehicles("vehicles/whetstone.txt");
             LoadVehicles("vehicles/bone.txt");

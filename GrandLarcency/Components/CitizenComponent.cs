@@ -1,6 +1,7 @@
-﻿using SampSharp.Entities;
+﻿using GrandLarcency.Data;
+using SampSharp.Entities;
 
-namespace GrandLarcency
+namespace GrandLarcency.Components
 {
     /// <summary>
     /// Represents a component which provides data for a player whom has chosen a spawn city.
@@ -8,7 +9,7 @@ namespace GrandLarcency
     public class CitizenComponent : Component
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CitizenComponent"/> class.
+        /// Initializes a new instance of the <see cref="CitizenComponent" /> class.
         /// </summary>
         /// <param name="city">The spawn city.</param>
         public CitizenComponent(City city)

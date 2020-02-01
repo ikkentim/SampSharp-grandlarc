@@ -1,6 +1,6 @@
 ﻿using SampSharp.Entities.SAMP;
 
-namespace GrandLarcency
+namespace GrandLarcency.Data
 {
     /// <summary>
     /// Represents a player spawn location.
@@ -8,7 +8,7 @@ namespace GrandLarcency
     public struct PlayerSpawn
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerSpawn"/> struct.
+        /// Initializes a new instance of the <see cref="PlayerSpawn" /> struct.
         /// </summary>
         /// <param name="position">The position of the spawn location.</param>
         /// <param name="angle">The angle of the spawn location.</param>

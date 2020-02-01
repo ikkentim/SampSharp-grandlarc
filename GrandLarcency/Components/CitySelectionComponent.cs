@@ -1,7 +1,8 @@
 ﻿using System;
+using GrandLarcency.Data;
 using SampSharp.Entities;
 
-namespace GrandLarcency
+namespace GrandLarcency.Components
 {
     /// <summary>
     /// Represents a component which provides data for a player which is the city selection screen.
@@ -9,7 +10,7 @@ namespace GrandLarcency
     public class CitySelectionComponent : Component
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CitySelectionComponent"/> class.
+        /// Initializes a new instance of the <see cref="CitySelectionComponent" /> class.
         /// </summary>
         public CitySelectionComponent()
         {

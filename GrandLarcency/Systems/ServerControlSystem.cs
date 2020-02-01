@@ -2,7 +2,7 @@
 using SampSharp.Entities;
 using SampSharp.Entities.SAMP;
 
-namespace GrandLarcency
+namespace GrandLarcency.Systems
 {
     /// <summary>
     /// Represents a system which provides some basic server configuration.

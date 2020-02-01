@@ -2,7 +2,7 @@
 using SampSharp.Entities.SAMP;
 using SampSharp.Entities.SAMP.Commands;
 
-namespace GrandLarcency
+namespace GrandLarcency.Systems
 {
     /// <summary>
     /// Represents a system which provides chat bubbles above the heads of players.
