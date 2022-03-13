@@ -1,5 +1,6 @@
 SampSharp Grandlarc
 ===================
-This repository contains the Grand Larcency 1.0 gamemode which has been converted to SampSharp.
-The Grand Larcency gamemode is a freeroam gamemode for SA-MP 0.3 which is shipped with every copy of the SA-MP server.
+This repository has been moved:
 
+- SampSharp.GameMode variant: https://github.com/SampSharp/sample-gm-grandlarc
+- SampSharp.Entities variant: https://github.com/SampSharp/sample-ecs-grandlarc
